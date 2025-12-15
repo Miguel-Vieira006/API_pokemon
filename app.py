@@ -232,6 +232,15 @@ def atualizar_iniciais(id_iniciais):
 
     return jsonify({"erro": "Iniciais não encontrados"}), 404
 
+# DELETE /iniciais/<id_iniciais>
+@app.delete('/iniciais/<int:id_iniciais>')
+def deletar_iniciais(id_iniciais):
+    inicial_remove = next((i for i in iniciais if i['id'] == id_iniciais), None)
+    if inicial_remove is None:
+        return jsonify({"erro": "Iniciais não encontrados"}), 404
+
+    iniciais.remove(inicial_remove)
+    return jsonify({"message": "Iniciais removidos com sucesso"}), 200
 
 if __name__ == "__main__":
     app.run(debug=True)
