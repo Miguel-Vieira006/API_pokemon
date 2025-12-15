@@ -167,3 +167,30 @@ iniciais = [
     }
 ]
 
+
+# GET /iniciais
+@app.get('/iniciais')
+def get_iniciais():
+    return jsonify({"Iniciais": iniciais}), 200
+
+# GET /iniciais/1
+@app.get('/iniciais/<int:id>')
+def get_iniciais_id(id):
+    for inicial in iniciais: 
+        if iniciais["id"] == id:
+            return jsonify(iniciais), 200
+    return jsonify({"erro": "Iniciais não encontrados"}), 404
+
+# GET /iniciais?nome=XPTO
+@app.get('/iniciais/nome')
+def get_loja_name():
+    nome = request.args.get('nome')
+    for inicial in iniciais:
+        if iniciais['nome'] == nome:
+            return jsonify(iniciais), 200
+    return jsonify({"erro": "Iniciais não encontrados"}), 404
+
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
