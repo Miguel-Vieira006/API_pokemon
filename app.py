@@ -190,6 +190,27 @@ def get_loja_name():
             return jsonify(iniciais), 200
     return jsonify({"erro": "Iniciais não encontrados"}), 404
 
+# POST /loja
+@app.post('/Iniciais')
+def criar_iniciais():
+    dado = request.get_json()
+
+    if not dado: 
+        return jsonify({"erro": "Dado não enviado"}), 400
+    if "nome" not in dado: 
+        return jsonify({"erro": "O campo 'nome' é obrigatório"}), 400
+    if "id" not in dado: 
+        return jsonify({"erro": "O campo 'id' é obrigatório"}), 400
+
+    novos_iniciais = {
+        "id": dado['id'],
+        "nome": dado['nome'],
+        "items": dado.get("items", [])
+    }
+
+    iniciais.append(novos_iniciais)
+    return jsonify(novos_iniciais), 201
+
 
 
 if __name__ == "__main__":
